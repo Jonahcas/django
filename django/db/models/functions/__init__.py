@@ -1,6 +1,9 @@
+# django\db\models\functions\__init__.py
+
 from .comparison import Cast, Coalesce, Collate, Greatest, JSONObject, Least, NullIf
 from .datetime import (
     Extract,
+    ExtractOld,
     ExtractDay,
     ExtractHour,
     ExtractIsoWeekDay,
