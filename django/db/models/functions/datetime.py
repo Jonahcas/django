@@ -50,8 +50,8 @@ class ExtractOld(TimezoneMixin, Transform):
         super().__init__(expression, **extra)
 
     def as_sql(self, compiler, connection):
-        #if not connection.ops.extract_trunc_lookup_pattern.fullmatch(self.lookup_name):
-        #    raise ValueError("Invalid lookup_name: %s" % self.lookup_name)
+        if not connection.ops.extract_trunc_lookup_pattern.fullmatch(self.lookup_name):
+            raise ValueError("Invalid lookup_name: %s" % self.lookup_name)
         sql, params = compiler.compile(self.lhs)
         lhs_output_field = self.lhs.output_field
         if isinstance(lhs_output_field, DateTimeField):
@@ -157,6 +157,8 @@ class Extract(TimezoneMixin, Transform):
             # assert should never be hit.
             assert False, "Tried to Extract from an invalid type."
         return sql, params
+
+    
 
     def resolve_expression(
         self, query=None, allow_joins=True, reuse=None, summarize=False, for_save=False
